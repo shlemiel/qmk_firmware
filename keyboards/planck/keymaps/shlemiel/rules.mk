@@ -1,5 +1,2 @@
+DEFERRED_EXEC_ENABLE = yes
 AUDIO_ENABLE = no
-
-ifeq ($(strip $(AUDIO_ENABLE)), yes)
-    SRC += muse.c
-endif
