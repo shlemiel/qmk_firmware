@@ -16,6 +16,10 @@
 
 #include QMK_KEYBOARD_H
 
+enum custom_keycodes {
+    KC_ESC1 = SAFE_RANGE,
+};
+
 enum planck_layers {
   L0,
   L1,
@@ -38,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // mouse
 [L1] = LAYOUT_planck_grid(
-    KC_NO   , KC_MS_L , KC_MS_D , KC_MS_U , KC_MS_R , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO ,
+    KC_ESC1 , KC_MS_L , KC_MS_D , KC_MS_U , KC_MS_R , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO ,
     KC_NO   , KC_BTN1 , KC_BTN2 , KC_BTN3 , KC_BTN4 , KC_BTN5 , KC_MS_L , KC_MS_D , KC_MS_U , KC_MS_R , KC_NO   , KC_NO ,
     KC_LSFT , KC_WH_L , KC_WH_D , KC_WH_U , KC_WH_R , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO ,
     KC_TRNS , KC_RCTL , KC_LGUI , KC_RALT , KC_ACL2 , KC_NO   , KC_NO   , KC_TRNS , KC_LALT , KC_LGUI , KC_LCTL , KC_NO
@@ -93,3 +97,14 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
 }
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case KC_ESC1:
+        if (record->event.pressed) {
+            SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_HOME))));
+        } else {
+        }
+        break;
+    }
+    return true;
+};
