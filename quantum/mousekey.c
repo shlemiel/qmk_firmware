@@ -124,19 +124,11 @@ static int8_t move_unit(uint8_t axis) {
         mousekey_frame = 1;
         unit           = dir * MOUSEKEY_MOVE_DELTA;
     } else { // acceleration
-        uint8_t mk_time_to_max_temp = mk_time_to_max;
-        if (mousekey_accel & (1 << 0)) {
-            mk_time_to_max_temp = mk_time_to_max_temp * 2;
-        } else if (mousekey_accel & (1 << 1)) {
-            mk_time_to_max_temp = mk_time_to_max_temp;
-        } else if (mousekey_accel & (1 << 2)) {
-            mk_time_to_max_temp = mk_time_to_max_temp / 2;
-        }
         // linear acceleration (is here for reference, but doesn't feel as good during use)
         // unit = (MOUSEKEY_MOVE_DELTA * mk_max_speed * inertia) / mk_time_to_max;
 
         // x**2 acceleration (quadratic, more precise for short movements)
-        int16_t percent = (inertia << 8) / mk_time_to_max_temp;
+        int16_t percent = (inertia << 8) / mk_time_to_max;
         percent         = ((int32_t)percent * percent) >> 8;
         if (inertia < 0) percent = -percent;
 
@@ -151,12 +143,8 @@ static int8_t move_unit(uint8_t axis) {
         unit = unit + ((mk_max_speed * percent) >> 8);
     }
 
-    if (mousekey_accel & (1 << 0)) {
-        unit = unit / 2;
-    } else if (mousekey_accel & (1 << 1)) {
-        unit = unit;
-    } else if (mousekey_accel & (1 << 2)) {
-        unit = unit * 2;
+    if (mousekey_accel & (1 << 2)) {
+        unit = unit * 4;
     }
 
     if (unit > MOUSEKEY_MOVE_MAX)
