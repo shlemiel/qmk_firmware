@@ -144,7 +144,7 @@ static int8_t move_unit(uint8_t axis) {
     }
 
     if (mousekey_accel & (1 << 2)) {
-        unit = unit * 6;
+        unit = unit * 8;
     }
 
     if (unit > MOUSEKEY_MOVE_MAX)
