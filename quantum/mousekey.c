@@ -333,6 +333,8 @@ void mousekey_task(void) {
         mousekey_frame = 0;
         tmpmr.x        = 0;
         tmpmr.y        = 0;
+        mousekey_x_inertia = 0;
+        mousekey_y_inertia = 0;
         mouse_report.x = move_unit(0);
         mouse_report.y = move_unit(1);
     }
