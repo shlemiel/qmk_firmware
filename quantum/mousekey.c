@@ -24,6 +24,8 @@
 #include "debug.h"
 #include "mousekey.h"
 
+int accel_on = 0;
+
 static inline int8_t times_inv_sqrt2(int8_t x) {
     // 181/256 is pretty close to 1/sqrt(2)
     // 0.70703125                 0.707106781
@@ -322,10 +324,17 @@ void mousekey_task(void) {
     }
 
     // reset if not moving and no movement keys are held
-    if ((!mousekey_x_dir) && (!mousekey_y_dir) && (!mousekey_x_inertia) && (!mousekey_y_inertia)) {
+    if (((!mousekey_x_dir) && (!mousekey_y_dir) && (!mousekey_x_inertia) && (!mousekey_y_inertia))) {
         mousekey_frame = 0;
         tmpmr.x        = 0;
         tmpmr.y        = 0;
+    } else if(accel_on) {
+        accel_on       = 0;
+        mousekey_frame = 0;
+        tmpmr.x        = 0;
+        tmpmr.y        = 0;
+        mouse_report.x = move_unit(0);
+        mouse_report.y = move_unit(1);
     }
 
 #    else // default acceleration
@@ -421,7 +430,7 @@ void mousekey_on(uint8_t code) {
     else if (code == KC_MS_ACCEL1)
         mousekey_accel |= (1 << 1);
     else if (code == KC_MS_ACCEL2)
-        mousekey_accel |= (1 << 2);
+        mousekey_accel |= (1 << 2), accel_on = 1;
 }
 
 void mousekey_off(uint8_t code) {
