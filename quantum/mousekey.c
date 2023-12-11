@@ -164,9 +164,9 @@ static uint8_t wheel_unit(void) {
     if (mousekey_accel & (1 << 0)) {
         unit = (MOUSEKEY_WHEEL_DELTA * mk_wheel_max_speed) / 4;
     } else if (mousekey_accel & (1 << 1)) {
-        unit = (MOUSEKEY_WHEEL_DELTA * mk_wheel_max_speed) / 2;
-    } else if (mousekey_accel & (1 << 2)) {
         unit = (MOUSEKEY_WHEEL_DELTA * mk_wheel_max_speed);
+    } else if (mousekey_accel & (1 << 2)) {
+        unit = (MOUSEKEY_WHEEL_DELTA * mk_wheel_max_speed) * 4;
     } else if (mousekey_wheel_repeat == 0) {
         unit = MOUSEKEY_WHEEL_DELTA;
     } else if (mousekey_wheel_repeat >= mk_wheel_time_to_max) {
