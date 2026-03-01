@@ -69,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_NO   , KC_HOME , KC_PGDN , KC_PGUP , KC_END  , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_PSCR , KC_APP  , KC_PAUS ,
      KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   ,
      KC_TRNS , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   ,
-     KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_ACL2 , KC_ACL2 , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS
+     KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_NO   , KC_NO   , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS
 ),
 
 // blank
@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   ,
      KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   ,
      KC_TRNS , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   ,
-     KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_ACL2 , KC_ACL2 , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS
+     KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_NO   , KC_NO   , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS
 ),
 
 // adjust
