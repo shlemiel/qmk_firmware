@@ -17,17 +17,17 @@
 #include QMK_KEYBOARD_H
 
 enum custom_keycodes {
-    KC_ESC1 = SAFE_RANGE,
+    KC_BT1 = SAFE_RANGE,
 };
 
 enum planck_layers {
-  L0,
-  L1,
-  L2,
-  L3,
-  L4,
-  L5,
-  L6
+    L0,
+    L1,
+    L2,
+    L3,
+    L4,
+    L5,
+    L6
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // adjust
 [L6] = LAYOUT_planck_grid(
-     KC_NO   , QK_BOOT , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   ,
+     KC_NO   , KC_BT1  , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   ,
      KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   ,
      KC_TRNS , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO   ,
      KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS
@@ -91,18 +91,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  state = update_tri_layer_state(state, L3, L1, L4);
-  state = update_tri_layer_state(state, L3, L2, L5);
-  state = update_tri_layer_state(state, L1, L2, L6);
-  return state;
+    state = update_tri_layer_state(state, L3, L1, L4);
+    state = update_tri_layer_state(state, L3, L2, L5);
+    state = update_tri_layer_state(state, L1, L2, L6);
+    return state;
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    static uint16_t bootloader_key_timer = 0;
+    static bool bootloader_other_key_recorded = false;
+    if(keycode != KC_BT1) { bootloader_other_key_recorded = true; }
+
     switch (keycode) {
-    case KC_ESC1:
+    case KC_BT1:
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_HOME))));
+            bootloader_key_timer = timer_read();
+            bootloader_other_key_recorded = false;
         } else {
+            if(!bootloader_other_key_recorded) {
+                if(timer_elapsed(bootloader_key_timer) >= 5000) {
+                    bootloader_jump();
+                }
+            }
+            bootloader_key_timer = 0;
         }
         break;
     }
